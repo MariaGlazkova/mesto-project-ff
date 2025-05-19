@@ -30,12 +30,3 @@ initialCards.forEach(function(card){
   const cardItem = createCard(card, deleteCard);
   placesList.append(cardItem);
 })
-
-
-
-
-
-
-// @todo: Функция удаления карточки
-
-// @todo: Вывести карточки на страницу
