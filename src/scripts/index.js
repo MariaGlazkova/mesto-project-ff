@@ -6,19 +6,34 @@ const content = document.querySelector(".content");
 const places = content.querySelector(".places");
 const placesList = places.querySelector(".places__list");
 
-function createCard(card, deleteCard) {
+function toggleLikePlace (likeButton) {
+  if (likeButton.classList.contains('card__like-button')) {
+    likeButton.classList.toggle('card__like-button_is-active');
+  }
+};
+
+function openCardImage (card) {
+  const popupTypeImage = document.querySelector(".popup_type_image");
+    popupTypeImage.classList.add("popup_is-opened");
+    const popupImage = popupTypeImage.querySelector(".popup__image");
+    popupImage.src = card.link;
+    const popupCaption = popupTypeImage.querySelector(".popup__caption");
+    popupCaption.textContent = card.name;
+}
+
+function createCard(card, deleteCard, likeButtonHandler, openCard) {
   const cardElement = cardTemplate.cloneNode(true);
 
   const cardImage = cardElement.querySelector(".card__image");
   cardImage.src = card.link;
   cardImage.alt = card.name;
   cardImage.addEventListener('click', function(){
-    const popupTypeImage = document.querySelector(".popup_type_image");
-    popupTypeImage.classList.add("popup_is-opened");
-    const popupImage = popupTypeImage.querySelector(".popup__image");
-    popupImage.src = card.link;
-    const popupCaption = popupTypeImage.querySelector(".popup__caption");
-    popupCaption.textContent = card.name;
+    openCard(card);
+  });
+
+  const likeButton = cardElement.querySelector(".card__like-button");
+  likeButton.addEventListener('click', function () {
+    likeButtonHandler(likeButton);
   })
 
   const cardTitle = cardElement.querySelector(".card__title");
@@ -38,7 +53,7 @@ function deleteCard(card) {
 }
 
 initialCards.forEach(function(card){
-  const cardItem = createCard(card, deleteCard);
+  const cardItem = createCard(card, deleteCard, toggleLikePlace, openCardImage);
   placesList.append(cardItem);
 })
 
@@ -96,7 +111,7 @@ function handleNewCardSubmit (evt) {
 
   const card = {name: popupInputTypeCardName.value, link: popupInputTypeUrl.value};
 
-  const cardItem = createCard(card, deleteCard);
+  const cardItem = createCard(card, deleteCard, toggleLikePlace, openCardImage);
   placesList.prepend(cardItem);
   popupTypeNewCard.classList.remove("popup_is-opened");
   popupInputTypeCardName.value = "";
@@ -131,4 +146,3 @@ function closePopupByOverlay(popup) {
 closePopupByOverlay(popupTypeEdit);
 closePopupByOverlay(popupTypeNewCard);
 closePopupByOverlay(popupTypeImage);
-
