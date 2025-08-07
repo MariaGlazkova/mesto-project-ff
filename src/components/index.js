@@ -1,15 +1,12 @@
 import "../pages/index.css";
-import {
-  initialCards,
-  createCard,
-  toggleLikePlace,
-  deleteCard,
-} from "./card.js";
+import { createCard, toggleLikePlace, deleteCard } from "./card.js";
+import initialCards from "./cards.js";
 import {
   openModal,
   closeModal,
   addModalEscEvent,
   removeModalEscEvent,
+  closePopupByOverlay,
 } from "./modal.js";
 
 const cardTemplate = document.querySelector("#card-template").content;
@@ -134,15 +131,6 @@ popupCloseTypeImage.addEventListener("click", function () {
   closeModal(popupTypeImage);
   removeModalEscEvent();
 });
-
-function closePopupByOverlay(popup) {
-  popup.addEventListener("click", function (evt) {
-    if (evt.target === popup) {
-      closeModal(popup);
-      removeModalEscEvent();
-    }
-  });
-}
 
 closePopupByOverlay(popupTypeEdit);
 closePopupByOverlay(popupTypeNewCard);

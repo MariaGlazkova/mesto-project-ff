@@ -22,3 +22,12 @@ export function addModalEscEvent() {
 export function removeModalEscEvent() {
   document.removeEventListener("keydown", handleEscape);
 }
+
+export function closePopupByOverlay(popup) {
+  popup.addEventListener("click", function (evt) {
+    if (evt.target === popup) {
+      closeModal(popup);
+      removeModalEscEvent();
+    }
+  });
+}
