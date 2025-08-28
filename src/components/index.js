@@ -2,6 +2,7 @@ import "../pages/index.css";
 import { createCard, toggleLikePlace, deleteCard } from "./card.js";
 import { initialCards } from "./cards.js";
 import { openModal, closeModal, closePopupByOverlay } from "./modal.js";
+import { enableValidation } from "./validation.js";
 
 const cardTemplate = document.querySelector("#card-template").content;
 const content = document.querySelector(".content");
@@ -108,3 +109,7 @@ popupCloseTypeImage.addEventListener("click", function () {
 closePopupByOverlay(popupTypeEdit);
 closePopupByOverlay(popupTypeNewCard);
 closePopupByOverlay(popupTypeImage);
+
+// Включаем валидацию для обеих форм
+enableValidation(formPopupTypeEdit);
+enableValidation(formPopupTypeNewCard);
