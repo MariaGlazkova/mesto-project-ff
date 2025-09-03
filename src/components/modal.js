@@ -7,6 +7,8 @@ function handleEscape(evt) {
   }
 }
 
+
+
 export function openModal(popup) {
   popup.classList.add("popup_is-opened");
   document.addEventListener("keydown", handleEscape);
@@ -24,3 +26,5 @@ export function closePopupByOverlay(popup) {
     }
   });
 }
+
+
