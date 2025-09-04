@@ -87,7 +87,7 @@
         placeholder="Ссылка на картинку"
         required>
         <span class="popup__input-error popup__input-error_type_link"></span>
-        <button type="submit" class="button popup__button">Создать</button>
+        <button type="submit" class="button popup__button popup__button_type_new-card">Создать</button>
       </form>
     </div>
   </div>
@@ -96,6 +96,28 @@
       <button type="button" class="popup__close"></button>
       <img src="" alt="" class="popup__image">
       <p class="popup__caption"></p>
+    </div>
+  </div>
+  <div class="popup popup_type_delete popup_is-animated">
+    <div class="popup__content">
+      <button type="button" class="popup__close"></button>
+      <h3 class="popup__title">Вы уверены?</h3>
+      <button type="button" class="button popup__button popup__button_type_delete">Да</button>
+    </div>
+  </div>
+  <div class="popup popup_type_avatar popup_is-animated">
+    <div class="popup__content">
+      <button type="button" class="popup__close"></button>
+      <h3 class="popup__title">Обновить аватар</h3>
+      <form class="popup__form" name="edit-avatar">
+        <input type="url"
+        id="avatar-link"
+        name="avatar-link"
+        class="popup__input popup__input_type_avatar-link"
+        required>
+        <span class="popup__input-error popup__input-error_type_avatar-link"></span>
+        <button type="submit" class="button popup__button popup__button_type_avatar">Сохранить</button>
+      </form>
     </div>
   </div>
 </div>

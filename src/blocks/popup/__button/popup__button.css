@@ -33,3 +33,5 @@
     line-height: 17px;
   }
 }
+
+@import url('./_type_delete/popup__button_type_delete.css');

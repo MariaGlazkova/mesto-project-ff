@@ -8,9 +8,7 @@ function showInputError(formElement, inputElement, errorMessage, inputErrorClass
 }
 
 function hideInputError(formElement, inputElement, inputErrorClass, errorClass) {
-  console.log('hideInputError', formElement, inputElement, inputErrorClass, errorClass, `.popup__input-error_type_${inputElement.name}`);
   const errorElement = formElement.querySelector(`.popup__input-error_type_${inputElement.name}`);
-  console.log('errorElement', errorElement);
   inputElement.classList.remove(inputErrorClass);
   errorElement.classList.remove(errorClass);
   errorElement.textContent = '';
@@ -18,7 +16,8 @@ function hideInputError(formElement, inputElement, inputErrorClass, errorClass) 
 
 function checkInputValidity(formElement, inputElement, inputErrorClass, errorClass) {
   if (!inputElement.validity.valid) {
-    const customErrorMessage = inputElement.dataset.errorMessage || inputElement.validationMessage;
+
+    const customErrorMessage = inputElement.validity.patternMismatch ? inputElement.dataset.errorMessage : inputElement.validationMessage;
     showInputError(formElement, inputElement, customErrorMessage, inputErrorClass, errorClass);
   } else {
     hideInputError(formElement, inputElement, inputErrorClass, errorClass);
@@ -35,15 +34,12 @@ function hasInvalidInput(inputList) {
 }
 
 function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
-  console.log('toggleButtonState', inputList, buttonElement, inactiveButtonClass);
   if (hasInvalidInput(inputList)) {
     buttonElement.classList.add(inactiveButtonClass);
     buttonElement.disabled = true;
-    console.log('buttonElement.classList.add(inactiveButtonClass)');
   } else {
     buttonElement.classList.remove(inactiveButtonClass);
     buttonElement.disabled = false;
-    console.log('buttonElement.classList.remove(inactiveButtonClass)');
   }
 }
 

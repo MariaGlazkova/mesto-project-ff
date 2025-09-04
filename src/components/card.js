@@ -1,7 +1,9 @@
+import { deleteCard } from "./api.js";
+
 export function createCard(
   card,
   cardTemplate,
-  deleteCard,
+  deleteCardHandler,
   likeButtonHandler,
   openCard,
   userId
@@ -33,9 +35,12 @@ export function createCard(
   likeCount.textContent = card.likes ? card.likes.length : 0;
 
   const deleteButton = cardElement.querySelector(".card__delete-button");
+  if (card.owner._id !== userId) {
+    deleteButton.classList.add("card__delete-button_hidden");
+  }
   deleteButton.addEventListener("click", function () {
     const cardItem = deleteButton.closest(".card");
-    deleteCard(cardItem);
+    deleteCardHandler(cardItem, card._id);
   });
 
   return cardElement;
@@ -60,8 +65,4 @@ export function toggleLikePlace(likeButton, cardId, likeCard, unlikeCard) {
         likeCountElement.textContent = updatedCard.likes.length;
       });
   }
-}
-
-export function deleteCard(card) {
-  card.remove();
 }

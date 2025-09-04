@@ -13,22 +13,27 @@ function handleResponse(res) {
   return Promise.reject(`Ошибка: ${res.status}`);
 }
 
-function getMe() {
+export function getMe() {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers
   })
-  .then(handleResponse);
+  .then(handleResponse)
+  .catch((err) => {
+    console.error('Ошибка при получении профиля:', err);
+  });
 }
 
-function getInitialCards() {
+export function getInitialCards() {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers
   })
-  .then(handleResponse);
+  .then(handleResponse)
+  .catch((err) => {
+    console.error('Ошибка при получении карточек:', err);
+  });
 }
 
-function editProfile(name, about) {
-  console.log('editProfile', name, about);
+export function editProfile(name, about) {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers,
     method: 'PATCH',
@@ -37,10 +42,13 @@ function editProfile(name, about) {
       about: about
     })
   })
-  .then(handleResponse);
+  .then(handleResponse)
+  .catch((err) => {
+    console.error('Ошибка при редактировании профиля:', err);
+  });
 }
 
-function addCard(name, link) {
+export function addCard(name, link) {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers,
     method: 'POST',
@@ -52,15 +60,18 @@ function addCard(name, link) {
   .then(handleResponse);
 }
 
-function likeCard(cardId) {
+export function likeCard(cardId) {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     headers: config.headers,
     method: 'PUT'
   })
-  .then(handleResponse);
+  .then(handleResponse)
+  .catch((err) => {
+    console.error('Ошибка при удалении карточки:', err);
+  });
 }
 
-function unlikeCard(cardId) {
+export function unlikeCard(cardId) {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     headers: config.headers,
     method: 'DELETE'
@@ -68,4 +79,26 @@ function unlikeCard(cardId) {
   .then(handleResponse);
 }
 
-export { getMe, getInitialCards, editProfile, addCard, likeCard, unlikeCard };
+export function deleteCard(cardId) {
+  return fetch(`${config.baseUrl}/cards/${cardId}`, {
+    headers: config.headers,
+    method: 'DELETE'
+  })
+  .then(handleResponse)
+  .catch((err) => {
+    console.error('Ошибка при удалении карточки:', err);
+  });
+}
+
+export function updateAvatar(avatar) {
+  return fetch(`${config.baseUrl}/users/me/avatar`, {
+    headers: config.headers,
+    method: 'PATCH',
+    body: JSON.stringify({ avatar: avatar })
+  })
+  .then(handleResponse)
+  .catch((err) => {
+    console.error('Ошибка при обновлении аватара:', err);
+  });
+}
+
