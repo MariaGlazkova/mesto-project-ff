@@ -43,6 +43,16 @@ function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
   }
 }
 
+function setButtonInactive(buttonElement, inactiveButtonClass) {
+  buttonElement.classList.add(inactiveButtonClass);
+  buttonElement.disabled = true;
+}
+
+function setButtonInProgress(buttonElement, loadingText) {
+  buttonElement.textContent = loadingText;
+  buttonElement.disabled = true;
+}
+
 function setEventListeners(formElement, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass) {
   const inputList = Array.from(formElement.querySelectorAll(inputSelector));
   const buttonElement = formElement.querySelector(submitButtonSelector);
@@ -62,18 +72,11 @@ function clearValidation(formElement, validationConfig) {
   const buttonElement = formElement.querySelector(validationConfig.submitButtonSelector);
 
   inputList.forEach((inputElement) => {
-    inputElement.classList.remove(validationConfig.inputErrorClass);
-  });
-
-  const errorElements = formElement.querySelectorAll('.popup__input-error');
-  errorElements.forEach(error => {
-    error.textContent = '';
-    error.classList.remove(validationConfig.errorClass);
+    hideInputError(formElement, inputElement, validationConfig.inputErrorClass, validationConfig.errorClass);
   });
 
   if (buttonElement) {
-    buttonElement.classList.add(validationConfig.inactiveButtonClass);
-    buttonElement.disabled = true;
+    setButtonInactive(buttonElement, validationConfig.inactiveButtonClass);
   }
 }
 
@@ -92,4 +95,4 @@ function enableValidation(validationConfig) {
   });
 }
 
-export { enableValidation, clearValidation, checkInputValidity, toggleButtonState };
+export { enableValidation, clearValidation, checkInputValidity, toggleButtonState, setButtonInactive, setButtonInProgress };

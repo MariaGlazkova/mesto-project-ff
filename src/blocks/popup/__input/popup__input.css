@@ -55,6 +55,10 @@
   margin-bottom: 5px;
 }
 
+.popup__input-error_type_avatar-link {
+  margin-bottom: 5px;
+}
+
 
 @media screen and (max-width: 568px) {
   .popup__title {

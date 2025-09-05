@@ -56,6 +56,8 @@ export function toggleLikePlace(likeButton, cardId, likeCard, unlikeCard) {
       .then((updatedCard) => {
         likeButton.classList.remove("card__like-button_is-active");
         likeCountElement.textContent = updatedCard.likes.length;
+      }).catch((err) => {
+        console.error('Ошибка при удалении лайка:', err);
       });
   } else {
     // Добавляем лайк
@@ -63,6 +65,8 @@ export function toggleLikePlace(likeButton, cardId, likeCard, unlikeCard) {
       .then((updatedCard) => {
         likeButton.classList.add("card__like-button_is-active");
         likeCountElement.textContent = updatedCard.likes.length;
+      }).catch((err) => {
+        console.error('Ошибка при добавлении лайка:', err);
       });
   }
 }

@@ -17,20 +17,14 @@ export function getMe() {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers
   })
-  .then(handleResponse)
-  .catch((err) => {
-    console.error('Ошибка при получении профиля:', err);
-  });
+  .then(handleResponse);
 }
 
 export function getInitialCards() {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers
   })
-  .then(handleResponse)
-  .catch((err) => {
-    console.error('Ошибка при получении карточек:', err);
-  });
+  .then(handleResponse);
 }
 
 export function editProfile(name, about) {
@@ -42,10 +36,7 @@ export function editProfile(name, about) {
       about: about
     })
   })
-  .then(handleResponse)
-  .catch((err) => {
-    console.error('Ошибка при редактировании профиля:', err);
-  });
+  .then(handleResponse);
 }
 
 export function addCard(name, link) {
@@ -65,10 +56,7 @@ export function likeCard(cardId) {
     headers: config.headers,
     method: 'PUT'
   })
-  .then(handleResponse)
-  .catch((err) => {
-    console.error('Ошибка при удалении карточки:', err);
-  });
+  .then(handleResponse);
 }
 
 export function unlikeCard(cardId) {
@@ -84,10 +72,7 @@ export function deleteCard(cardId) {
     headers: config.headers,
     method: 'DELETE'
   })
-  .then(handleResponse)
-  .catch((err) => {
-    console.error('Ошибка при удалении карточки:', err);
-  });
+  .then(handleResponse);
 }
 
 export function updateAvatar(avatar) {
@@ -96,9 +81,6 @@ export function updateAvatar(avatar) {
     method: 'PATCH',
     body: JSON.stringify({ avatar: avatar })
   })
-  .then(handleResponse)
-  .catch((err) => {
-    console.error('Ошибка при обновлении аватара:', err);
-  });
+  .then(handleResponse);
 }
 

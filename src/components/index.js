@@ -1,7 +1,7 @@
 import "../pages/index.css";
 import { createCard, toggleLikePlace } from "./card.js";
 import { openModal, closeModal, closePopupByOverlay } from "./modal.js";
-import { enableValidation, clearValidation } from "./validation.js";
+import { enableValidation, clearValidation, setButtonInProgress } from "./validation.js";
 import { getMe, getInitialCards, editProfile, addCard, likeCard, unlikeCard, deleteCard, updateAvatar } from "./api.js";
 
 const cardTemplate = document.querySelector("#card-template").content;
@@ -56,11 +56,12 @@ const validationConfig = {
   submitButtonSelector: '.popup__button',
   inactiveButtonClass: 'popup__button_disabled',
   inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
+  errorClass: 'popup__error_visible',
 };
 
 function openCardImage(card) {
   popupImage.src = card.link;
+  popupImage.alt = card.name;
   popupCaption.textContent = card.name;
   openModal(popupTypeImage);
 }
@@ -80,6 +81,8 @@ profileEditButton.addEventListener("click", function () {
 
 
 newCardButton.addEventListener("click", function () {
+  popupInputTypeCardName.value = "";
+  popupInputTypeUrl.value = "";
   clearValidation(popupTypeNewCard, validationConfig);
   openModal(popupTypeNewCard);
 });
@@ -96,22 +99,25 @@ function handleProfileInfoSubmit(evt) {
       profileTitle.textContent = updatedProfile.name;
       profileDescription.textContent = updatedProfile.about;
       closeModal(popupTypeEdit);
+    })
+    .catch((err) => {
+      console.error('Ошибка при редактировании профиля:', err);
     });
 }
 formPopupTypeEdit.addEventListener("submit", handleProfileInfoSubmit);
 
 popupCloseNewCard.addEventListener("click", function () {
+  popupInputTypeCardName.value = "";
+  popupInputTypeUrl.value = "";
   closeModal(popupTypeNewCard);
 });
 
 function handleNewCardSubmit(evt) {
   evt.preventDefault();
 
-
   const originalButtonText = popupSubmitNewCardButton.textContent;
 
-  popupSubmitNewCardButton.textContent = 'Создание...';
-  popupSubmitNewCardButton.disabled = true;
+  setButtonInProgress(popupSubmitNewCardButton, 'Создание...');
 
   addCard(popupInputTypeCardName.value, popupInputTypeUrl.value)
     .then((newCard) => {
@@ -127,6 +133,9 @@ function handleNewCardSubmit(evt) {
       popupInputTypeCardName.value = "";
       popupInputTypeUrl.value = "";
       closeModal(popupTypeNewCard);
+    })
+    .catch((err) => {
+      console.error('Ошибка при создании карточки:', err);
     })
     .finally(() => {
       popupSubmitNewCardButton.textContent = originalButtonText;
@@ -160,10 +169,13 @@ popupButtonDelete.addEventListener("click", function () {
 });
 
 profileAvatarEditButton.addEventListener("click", function () {
+  popupInputTypeAvatarLink.value = "";
+  clearValidation(popupTypeAvatar, validationConfig);
   openModal(popupTypeAvatar);
 });
 
 popupCloseTypeAvatar.addEventListener("click", function () {
+  popupInputTypeAvatarLink.value = "";
   closeModal(popupTypeAvatar);
 });
 
@@ -173,16 +185,18 @@ function handleAvatarSubmit(evt) {
 
   const originalButtonText = popupSubmitAvatarButton.textContent;
 
-  popupSubmitAvatarButton.textContent = 'Сохранение...';
-  popupSubmitAvatarButton.disabled = true;
+  setButtonInProgress(popupSubmitAvatarButton, 'Сохранение...');
 
   updateAvatar(popupInputTypeAvatarLink.value)
     .then((updatedAvatar) => {
       profileImage.style.backgroundImage = `url(${updatedAvatar.avatar})`;
-      popupInputTypeAvatarLink.value = '';
       closeModal(popupTypeAvatar);
     })
+    .catch((err) => {
+      console.error('Ошибка при обновлении аватара:', err);
+    })
     .finally(() => {
+      popupInputTypeAvatarLink.value = '';
       popupSubmitAvatarButton.textContent = originalButtonText;
       popupSubmitAvatarButton.disabled = false;
     });
@@ -220,4 +234,7 @@ function setupInitialCards(initialCards, userId) {
 Promise.all([getMe(), getInitialCards()]).then(([profileInfo, initialCards]) => {
   setupProfileInfo(profileInfo);
   setupInitialCards(initialCards, profileInfo._id);
+})
+.catch((err) => {
+  console.error('Ошибка при получении данных:', err);
 });

@@ -58,7 +58,8 @@
         placeholder="Занятие"
         minlength="2" maxlength="200"
         required
-        pattern="^[a-zA-Zа-яА-Я\s\-]+$">
+        pattern="^[a-zA-Zа-яА-Я\s\-]+$"
+        data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы">
         <span class="popup__input-error popup__input-error_type_description"></span>
         <button type="submit" class="button popup__button">Сохранить</button>
       </form>
@@ -94,7 +95,7 @@
   <div class="popup popup_type_image popup_is-animated">
     <div class="popup__content popup__content_content_image">
       <button type="button" class="popup__close"></button>
-      <img src="" alt="" class="popup__image">
+      <img src="" alt="Изображение места" class="popup__image">
       <p class="popup__caption"></p>
     </div>
   </div>
@@ -114,6 +115,7 @@
         id="avatar-link"
         name="avatar-link"
         class="popup__input popup__input_type_avatar-link"
+        placeholder="Ссылка на аватар"
         required>
         <span class="popup__input-error popup__input-error_type_avatar-link"></span>
         <button type="submit" class="button popup__button popup__button_type_avatar">Сохранить</button>
