@@ -236,5 +236,5 @@ Promise.all([getMe(), getInitialCards()]).then(([profileInfo, initialCards]) => 
   setupInitialCards(initialCards, profileInfo._id);
 })
 .catch((err) => {
-  console.error('Ошибка при получении данных:', err);
+  console.error('Ошибка при загрузке первоначальных данных:', err);
 });
